@@ -14,17 +14,9 @@ import { CheckBox } from "react-native-web";
 
 import Equation from "./components/Equation";
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 const numberOfColumns = 12;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#daded4",
-    color: "#3c403d",
-    height: "100%",
-    minHeight: windowHeight,
-  },
   headerContainer: {
     flex: 1,
     flexDirection: "row",
@@ -115,11 +107,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const moreStyles = (text) =>
+const moreStyles = (text, width, height) =>
   StyleSheet.create({
+    container: {
+      backgroundColor: "#daded4",
+      color: "#3c403d",
+      height: "100%",
+      minHeight: height ? height : Dimensions.get("window").height,
+    },
     head: {
-      width: windowWidth / numberOfColumns,
-      height: windowWidth / numberOfColumns,
+      width: width
+        ? width / numberOfColumns
+        : Dimensions.get("window").width / numberOfColumns,
+      height: width
+        ? width / numberOfColumns
+        : Dimensions.get("window").width / numberOfColumns,
       maxWidth: 50,
       maxHeight: 50,
       justifyContent: "center",
@@ -167,11 +169,26 @@ class App extends Component {
     ],
     nextVisible: false,
     correct: true,
+    windowHeight: Dimensions.get("window").height,
+    windowWidth: Dimensions.get("window").width,
   };
 
   componentDidMount() {
     this.createNewProblem();
+
+    window.addEventListener("resize", this.handleResize);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize = () => {
+    this.setState({
+      windowHeight: Dimensions.get("window").height,
+      windowWidth: Dimensions.get("window").width,
+    });
+  };
 
   createNewProblem = () => {
     let newFirstNum = Math.floor(Math.random() * 21) - 10;
@@ -267,7 +284,9 @@ class App extends Component {
   render() {
     return (
       <SafeAreaProvider>
-        <ScrollView style={styles.container}>
+        <ScrollView
+          style={moreStyles("", this.state.width, this.state.height).container}
+        >
           <View style={styles.headerContainer}>
             <View style={styles.playLinkImg}>
               <Image
@@ -363,8 +382,26 @@ class App extends Component {
                     key={cellIndex}
                     onPress={() => this.onTileClicked(rowIndex, cellIndex)}
                   >
-                    <View style={moreStyles(cell).head}>
-                      <Text style={moreStyles(cell).text}>{cell}</Text>
+                    <View
+                      style={
+                        moreStyles(
+                          cell,
+                          this.state.windowWidth,
+                          this.state.windowHeight
+                        ).head
+                      }
+                    >
+                      <Text
+                        style={
+                          moreStyles(
+                            cell,
+                            this.state.windowWidth,
+                            this.state.windowHeight
+                          ).text
+                        }
+                      >
+                        {cell}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 ))}
