@@ -8,10 +8,11 @@ import {
   Text,
   Button,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { CheckBox } from "react-native-web";
 
-import Equation from "./components/Equation";
+import Equation from "./components copy/Equation";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -25,6 +26,10 @@ const styles = StyleSheet.create({
     minHeight: windowHeight,
   },
   headerContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "#daded4",
     color: "#3c403d",
     borderBottomColor: "#daded4",
@@ -103,6 +108,10 @@ const styles = StyleSheet.create({
   },
   checkboxes: {
     marginLeft: 10,
+  },
+  resizeMode: {
+    height: 50,
+    width: 120,
   },
 });
 
@@ -260,7 +269,19 @@ class App extends Component {
       <SafeAreaProvider>
         <ScrollView style={styles.container}>
           <View style={styles.headerContainer}>
+            <View style={styles.playLinkImg}></View>
             <Text style={styles.header}>Integer Tiles</Text>
+            <View style={styles.playLinkImg}>
+              <a href="https://play.google.com/store/apps/details?id=com.integertiles&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                <Image
+                  resizeMode="contain"
+                  source={
+                    "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                  }
+                  style={styles.resizeMode}
+                />
+              </a>
+            </View>
           </View>
           <View style={styles.row}>
             {[
