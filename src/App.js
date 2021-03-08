@@ -68,17 +68,23 @@ const styles = StyleSheet.create({
     color: "#3c403d",
     fontSize: 18,
     textAlign: "left",
-    marginLeft: 5,
+    marginLeft: 10,
+  },
+  btnsRow: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginRight: 5,
+    maxWidth: 230,
+    alignSelf: "center",
   },
   scoreBtn: {
-    width: 80,
-    alignSelf: "center",
-    marginRight: 5,
+    width: 105,
     paddingVertical: 0,
     color: "#daded4",
     fontSize: 16,
     fontWeight: "bold",
     marginVertical: 10,
+    marginHorizontal: 5,
   },
   tableBorder: {
     borderWidth: 1,
@@ -281,6 +287,25 @@ class App extends Component {
     }
   };
 
+  resetDataTable = () => {
+    this.setState({
+      dataTable: [
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", "", "", "", ""],
+      ],
+    });
+  };
+
   render() {
     return (
       <SafeAreaProvider>
@@ -355,19 +380,30 @@ class App extends Component {
           )}
           <View style={styles.scoreRow}>
             <Text style={styles.score}>Score: {this.state.score}</Text>
-            <View style={styles.scoreBtn}>
-              <Button
-                title="Reset"
-                color="#a3bcb6"
-                onPress={() => {
-                  this.createNewProblem();
-                  this.setState({
-                    nextVisible: false,
-                    numInput: "",
-                    score: 0,
-                  });
-                }}
-              />
+            <View style={styles.btnsRow}>
+              <View style={styles.scoreBtn}>
+                <Button
+                  title="Reset Score"
+                  color="#a3bcb6"
+                  onPress={() => {
+                    this.createNewProblem();
+                    this.setState({
+                      nextVisible: false,
+                      numInput: "",
+                      score: 0,
+                    });
+                  }}
+                />
+              </View>
+              <View style={styles.scoreBtn}>
+                <Button
+                  title="Reset Tiles"
+                  color="#a3bcb6"
+                  onPress={() => {
+                    this.resetDataTable();
+                  }}
+                />
+              </View>
             </View>
           </View>
           <Text style={styles.directions}>
