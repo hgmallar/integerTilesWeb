@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { CheckBox } from "react-native-web";
 
-import Equation from "./components copy/Equation";
+import Equation from "./components/Equation";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -269,7 +269,13 @@ class App extends Component {
       <SafeAreaProvider>
         <ScrollView style={styles.container}>
           <View style={styles.headerContainer}>
-            <View style={styles.playLinkImg}></View>
+            <View style={styles.playLinkImg}>
+              <Image
+                resizeMode="contain"
+                source={"logo.jpg"}
+                style={styles.resizeMode}
+              />
+            </View>
             <Text style={styles.header}>Integer Tiles</Text>
             <View style={styles.playLinkImg}>
               <a href="https://play.google.com/store/apps/details?id=com.integertiles&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
