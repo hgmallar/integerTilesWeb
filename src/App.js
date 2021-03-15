@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   score: {
     color: "#3c403d",
     fontSize: 18,
-    textAlign: "left",
+    textAlign: "center",
     marginLeft: 10,
   },
   btnsRow: {
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
     borderColor: "#3c403d",
   },
   checkboxContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     color: "#3c403d",
     fontWeight: "bold",
     fontSize: 30,
-    marginRight: 5,
+    marginRight: 15,
     marginLeft: 10,
     paddingBottom: 5,
   },
@@ -159,6 +158,7 @@ class App extends Component {
     possibleSigns: ["\u002b"],
     score: 0,
     inputDisabled: false,
+    inputText: "",
     dataTable: [
       ["", "\u002b", "", "", "", "", "", "", "", "", "", ""],
       ["", "\u2212", "", "", "", "", "", "", "", "", "", ""],
@@ -219,11 +219,16 @@ class App extends Component {
       position: newPosition,
       sign: newSign,
       numInput: "",
+      inputText: "",
       inputDisabled: false,
     });
   };
 
-  onSubmitEditing = ({ nativeEvent: { text } }) => {
+  setInputText = (text) => {
+    this.setState({ inputText: text });
+  };
+
+  onSubmitEditing = (text) => {
     let numberInput = text;
     let correct = false;
     let score = this.state.score;
@@ -320,7 +325,7 @@ class App extends Component {
                 style={styles.resizeMode}
               />
             </View>
-            <Text style={styles.header}>Integer Tiles</Text>
+            <Text style={styles.header}>Integer Operations Practice</Text>
             <View style={styles.playLinkImg}>
               <a href="https://play.google.com/store/apps/details?id=com.integertiles&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
                 <Image
@@ -333,6 +338,9 @@ class App extends Component {
               </a>
             </View>
           </View>
+          <Text style={styles.score}>
+            Select operations to include in the questions.
+          </Text>
           <View style={styles.row}>
             {[
               ["add", "\u002b"],
@@ -351,6 +359,9 @@ class App extends Component {
               </View>
             ))}
           </View>
+          <Text style={styles.score}>
+            Complete the equation by filling in the box provided.
+          </Text>
           <Equation
             onSubmitEditing={this.onSubmitEditing}
             position={this.state.position}
@@ -362,8 +373,9 @@ class App extends Component {
             answerVisible={this.state.nextVisible}
             correct={this.state.correct}
             inputDisabled={this.state.inputDisabled}
+            setInputText={this.setInputText}
           />
-          {this.state.nextVisible && (
+          {this.state.nextVisible ? (
             <View style={styles.submitBtn}>
               <Button
                 title="NEXT"
@@ -374,6 +386,16 @@ class App extends Component {
                     nextVisible: false,
                     numInput: "",
                   });
+                }}
+              />
+            </View>
+          ) : (
+            <View style={styles.submitBtn}>
+              <Button
+                title="SUBMIT"
+                color="#39603d"
+                onPress={() => {
+                  this.onSubmitEditing(this.state.inputText);
                 }}
               />
             </View>

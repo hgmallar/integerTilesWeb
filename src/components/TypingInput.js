@@ -29,6 +29,7 @@ const TypingInput = ({
   placeholder,
   correct,
   inputDisabled,
+  setInputText,
 }) => {
   const [text, setText] = useState(placeholder);
 
@@ -46,10 +47,14 @@ const TypingInput = ({
         clearTextOnFocus={true}
         blurOnSubmit={true}
         numberOfLines={100}
-        onChangeText={(text) => setText(text)}
-        onSubmitEditing={(evt) => {
-          onSubmitEditing(evt);
+        onChangeText={(text) => {
+          setText(text);
+          setInputText(text);
+        }}
+        onSubmitEditing={({ nativeEvent: { text } }) => {
+          onSubmitEditing(text);
           setText("");
+          setInputText("");
         }}
         value={placeholder ? placeholder : text}
       />

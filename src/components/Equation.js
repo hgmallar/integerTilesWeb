@@ -41,6 +41,7 @@ export default class Equation extends Component {
               onSubmitEditing={this.props.onSubmitEditing}
               correct={this.props.correct}
               inputDisabled={this.props.inputDisabled}
+              setInputText={this.props.setInputText}
             />
             <Text
               style={
@@ -61,6 +62,7 @@ export default class Equation extends Component {
               onSubmitEditing={this.props.onSubmitEditing}
               correct={this.props.correct}
               inputDisabled={this.props.inputDisabled}
+              setInputText={this.props.setInputText}
             />
             <Text style={styles.content}>{` = ${this.props.thirdNum}`}</Text>
           </View>
@@ -78,6 +80,7 @@ export default class Equation extends Component {
               onSubmitEditing={this.props.onSubmitEditing}
               correct={this.props.correct}
               inputDisabled={this.props.inputDisabled}
+              setInputText={this.props.setInputText}
             />
           </View>
         )}
