@@ -158,7 +158,6 @@ class App extends Component {
     possibleSigns: ["\u002b"],
     score: 0,
     inputDisabled: false,
-    inputText: "",
     dataTable: [
       ["", "\u002b", "", "", "", "", "", "", "", "", "", ""],
       ["", "\u2212", "", "", "", "", "", "", "", "", "", ""],
@@ -219,13 +218,12 @@ class App extends Component {
       position: newPosition,
       sign: newSign,
       numInput: "",
-      inputText: "",
       inputDisabled: false,
     });
   };
 
   setInputText = (text) => {
-    this.setState({ inputText: text });
+    this.setState({ numInput: text });
   };
 
   onSubmitEditing = (text) => {
@@ -261,7 +259,6 @@ class App extends Component {
   };
 
   onTileClicked = (row, col) => {
-    console.log(row, col);
     let newData = this.state.dataTable;
     if (newData[row][col] === "") {
       newData[row][col] = "\u002b";
@@ -279,12 +276,14 @@ class App extends Component {
       const index = newPossibleSigns.indexOf(sign);
       if (index > -1) {
         newPossibleSigns.splice(index, 1);
+        if (newPossibleSigns.length && sign === this.state.sign) {
+          this.createNewProblem();
+        }
       }
     } else {
       newPossibleSigns.push(sign);
     }
     if (newPossibleSigns.length) {
-      this.createNewProblem();
       this.setState({
         [symbol]: !this.state[symbol],
         possibleSigns: newPossibleSigns,
@@ -384,7 +383,6 @@ class App extends Component {
                   this.createNewProblem();
                   this.setState({
                     nextVisible: false,
-                    numInput: "",
                   });
                 }}
               />
@@ -395,7 +393,7 @@ class App extends Component {
                 title="SUBMIT"
                 color="#39603d"
                 onPress={() => {
-                  this.onSubmitEditing(this.state.inputText);
+                  this.onSubmitEditing(this.state.numInput);
                 }}
               />
             </View>

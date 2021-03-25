@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-web";
 
-const styles = (placeholder, correct) =>
+const styles = (answerVisible, correct) =>
   StyleSheet.create({
     letterInput: {
       height: 44,
@@ -10,9 +10,8 @@ const styles = (placeholder, correct) =>
       color: "#39603d",
       borderRadius: 5,
       borderWidth: 1,
-      backgroundColor:
-        placeholder === "" ? "#daded4" : correct ? "#a3bcb6" : "red",
-      fontWeight: placeholder === "" ? "normal" : "bold",
+      backgroundColor: !answerVisible ? "#daded4" : correct ? "#a3bcb6" : "red",
+      fontWeight: !answerVisible ? "normal" : "bold",
       fontSize: 30,
       marginRight: 10,
       paddingHorizontal: 5,
@@ -27,16 +26,21 @@ const TypingInput = ({
   onSubmitEditing,
   maxLen,
   placeholder,
+  answerVisible,
   correct,
   inputDisabled,
   setInputText,
 }) => {
   const [text, setText] = useState(placeholder);
 
+  if (placeholder === "" && text) {
+    setText("");
+  }
+
   return (
     <View>
       <TextInput
-        style={styles(placeholder, correct).letterInput}
+        style={styles(answerVisible, correct).letterInput}
         disabled={inputDisabled}
         maxLength={maxLen}
         keyboardType={keyType}
@@ -54,7 +58,6 @@ const TypingInput = ({
         onSubmitEditing={({ nativeEvent: { text } }) => {
           onSubmitEditing(text);
           setText("");
-          setInputText("");
         }}
         value={placeholder ? placeholder : text}
       />
