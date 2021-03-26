@@ -197,10 +197,16 @@ class App extends Component {
 
   createNewProblem = () => {
     let newFirstNum = Math.floor(Math.random() * 21) - 10;
-    const newSecondNum = Math.floor(Math.random() * 21) - 10;
+    let newSecondNum = Math.floor(Math.random() * 21) - 10;
     const newSign = this.state.possibleSigns[
       Math.floor(Math.random() * this.state.possibleSigns.length)
     ];
+    //remove divide by 0.
+    if (newSign === "\u00f7" && newSecondNum === 0) {
+      while (newSecondNum === 0) {
+        newSecondNum = Math.floor(Math.random() * 21) - 10;
+      }
+    }
     let newThirdNum = newFirstNum * newSecondNum;
     if (newSign === "\u002b") {
       newThirdNum = newFirstNum + newSecondNum;
@@ -210,7 +216,17 @@ class App extends Component {
       newFirstNum = newThirdNum;
       newThirdNum = newFirstNum / newSecondNum;
     }
-    const newPosition = Math.floor(Math.random() * 3) + 1;
+    let newPosition = Math.floor(Math.random() * 3) + 1;
+    //check position on multiply by 0
+    if (newPosition === 1 && newSecondNum === 0) {
+      while (newPosition === 1) {
+        newPosition = Math.floor(Math.random() * 3) + 1;
+      }
+    } else if (newPosition === 2 && newFirstNum === 0) {
+      while (newPosition === 2) {
+        newPosition = Math.floor(Math.random() * 3) + 1;
+      }
+    }
     this.setState({
       firstNum: `${newFirstNum}`,
       secondNum: `${newSecondNum}`,
