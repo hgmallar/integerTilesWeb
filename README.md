@@ -1,6 +1,6 @@
 # Integer Tiles
 
-[Start your search here.](https://www.integertiles.com/)
+[View the site here.](https://www.integertiles.com/)
 
 ### React web application to practice integer operations using manipulatives.
 
